@@ -60,7 +60,7 @@ class MatchViewModel : ViewModel() {
 
 
             if (runs == null) {
-                _lastOutcome.value = "Invalid Outcome" // no return or early exit
+                _lastOutcome.value = "Invalid Outcome"
 
                 _team1Runs.value = _team1Runs.value!! + 5
             }
@@ -98,7 +98,9 @@ class MatchViewModel : ViewModel() {
     }
 
     private fun finishMatch() {
+
         _matchEnded.value = true
+
 
         _matchResult.value = when {
             _team2Runs.value!! > _team1Runs.value!! -> "$team2Name wins"
@@ -110,10 +112,13 @@ class MatchViewModel : ViewModel() {
 
     private fun getRandomOutcome(): String {
         val outcomes = listOf("0", "1", "2", "3", "4", "6", "Out", "Invalid")
+
+
         return outcomes.random()
     }
 
     fun ballsToOvers(balls: Int): String {
+
         val overs = balls / 6
         val rem = balls % 6
         return "$overs.$rem"
