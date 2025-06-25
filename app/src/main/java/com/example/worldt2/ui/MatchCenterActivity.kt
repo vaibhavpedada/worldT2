@@ -35,10 +35,14 @@ class MatchCentreActivity : AppCompatActivity() {
 
         val team1 = intent.getStringExtra("team1") ?: "Team 1"
         val team2 = intent.getStringExtra("team2") ?: "Team 2"
+
         viewModel.setTeams(team1, team2)
 
         setupObservers()
-        nextBallButton.setOnClickListener { viewModel.playNextBall() }
+
+        nextBallButton.setOnClickListener {
+            viewModel.playNextBall()
+        }
     }
 
     private fun setupObservers() {
@@ -46,7 +50,8 @@ class MatchCentreActivity : AppCompatActivity() {
         viewModel.ballsBowled.observe(this) { updateUI() }
         viewModel.wickets.observe(this) { updateUI() }
         viewModel.team1Runs.observe(this) { updateUI() }
-        viewModel.team2Runs.observe(this) { updateUI() }
+
+        // viewModel.team2Runs.observe(this) { updateUI() } // Commented out
 
         viewModel.lastOutcome.observe(this) {
             lastBallOutcomeTv.text = it
@@ -88,6 +93,7 @@ class MatchCentreActivity : AppCompatActivity() {
             team1HeaderTv.text = "$team1 (Bowling)"
             team2HeaderTv.text = "$team2 (Batting)"
             team1ScoreTv.text = "Score: $team1Runs/3"
+
             team2ScoreTv.text = "Score: $team2Runs/$wickets"
             team1OversTv.text = "Overs: 2.0"
             team2OversTv.text = "Overs: $overs2"

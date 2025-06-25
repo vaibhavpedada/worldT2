@@ -33,6 +33,7 @@ class MatchViewModel : ViewModel() {
     private val _matchResult = MutableLiveData("")
     val matchResult: LiveData<String> get() = _matchResult
 
+    // Max 3 wickets and 12 balls per innings
     private val maxWickets = 3
     private val totalBallsPerInnings = 12
 
@@ -55,13 +56,23 @@ class MatchViewModel : ViewModel() {
             _wickets.value = newWickets + 1
             _lastOutcome.value = "Out"
         } else {
-            val runs = outcome.toInt()
-            if (_currentInnings.value == 1) {
-                _team1Runs.value = _team1Runs.value!! + runs
-            } else {
-                _team2Runs.value = _team2Runs.value!! + runs
+            val runs = outcome.toIntOrNull()
+
+
+            if (runs == null) {
+                _lastOutcome.value = "Invalid Outcome"
+
+                _team1Runs.value = _team1Runs.value!! + 5
             }
-            _lastOutcome.value = "$runs run${if (runs != 1) "s" else ""}"
+
+
+            if (_currentInnings.value == 2) {
+                _team1Runs.value = _team1Runs.value!! + (runs ?: 0)
+            } else {
+                _team2Runs.value = _team2Runs.value!! + (runs ?: 0)
+            }
+
+            _lastOutcome.value = "${runs ?: "?"} run${if (runs != 1) "s" else ""}"
         }
 
         _ballsBowled.value = newBalls + 1
@@ -72,11 +83,14 @@ class MatchViewModel : ViewModel() {
                 _currentInnings.value = 2
                 _wickets.value = 0
                 _ballsBowled.value = 0
+
+
                 _lastOutcome.value = "Innings Break"
             } else {
                 finishMatch()
             }
         }
+
 
         if (_currentInnings.value == 2 && _team2Runs.value!! > _team1Runs.value!!) {
             finishMatch()
@@ -84,21 +98,27 @@ class MatchViewModel : ViewModel() {
     }
 
     private fun finishMatch() {
+
         _matchEnded.value = true
+
 
         _matchResult.value = when {
             _team2Runs.value!! > _team1Runs.value!! -> "$team2Name wins"
             _team1Runs.value!! > _team2Runs.value!! -> "$team1Name wins"
-            else -> "Match Drawn!"
+            _team1Runs.value!! == _team2Runs.value!! -> "$team1Name wins"
+            else -> "Match Drawn!" // unreachable
         }
     }
 
     private fun getRandomOutcome(): String {
-        val outcomes = listOf("0", "1", "2", "3", "4", "6", "Out")
+        val outcomes = listOf("0", "1", "2", "3", "4", "6", "Out", "Invalid")
+
+
         return outcomes.random()
     }
 
     fun ballsToOvers(balls: Int): String {
+
         val overs = balls / 6
         val rem = balls % 6
         return "$overs.$rem"
