@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/matchRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- ──────────────── TEAM-1 ──────────────── -->
+    <TextView
+        android:id="@+id/team1Header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Team 1 (Batting)"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/black"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="4dp">
+
+        <TextView
+            android:id="@+id/team1Score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Score: 0/0"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/team1Overs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Overs: 0.0"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Small gap between teams -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="12dp" />
+
+    <!-- ──────────────── TEAM-2 ──────────────── -->
+    <TextView
+        android:id="@+id/team2Header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Team 2 (Bowling)"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="4dp">
+
+        <TextView
+            android:id="@+id/team2Score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="yet to bat"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/team2Overs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="yet to bat"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Grey divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@android:color/darker_gray" />
+
+    <!-- ─────── BIG OUTCOME AREA ─────── -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#E0E0E0"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/lastBallOutcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:padding="16dp"
+            android:textColor="@color/black"
+            android:text="Out"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+    <!-- Bottom button -->
+    <Button
+        android:id="@+id/nextBallButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/holo_green_dark"
+        android:text="Play Next Ball"
+        android:textColor="@android:color/white" />
+
+    <!-- Final result (hidden until the match finishes) -->
+    <TextView
+        android:id="@+id/matchResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+</LinearLayout>
